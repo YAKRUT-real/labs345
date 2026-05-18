@@ -1,29 +1,33 @@
-package main
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+using namespace std;
 
-import (
-	"fmt"
-)
-func f(x float64) float64{
-	if x<=-3.0{
-		return -x - 6.0
-	} else if x <= -1.0{
-		return -1.5*x*x-4.5*x-3.0
-	} else if x <= 0.0{
-		return -3.0*x-3.0
-	} else if x<=3.0{
-		return (2.0/9.0)*x*x*x-3.0
-	} else{
-		return -1.5*x+7.5
-	}
-	}
-func main(){
-	var x_start, x_end, dx float64
-	fmt.Print("Введине Хнач, Хкон, dx: ")
-	fmt.Scan(&x_start, &x_end, &dx)
-	fmt.Println("\n   x       y\n")
-	fmt.Println("----------------\n")
-	oshibka := 1e-9
-	for x := x_start; x<= x_end+oshibka; x+=dx{
-		fmt.Printf("%8.4f%10.4f\n",x,f(x))
-	}
+float cofe(float Tk,float Tsr,float r,float t)
+{
+    return (Tsr+(Tk-Tsr)*exp(-r*t));
+}
+
+int main()
+{
+    setlocale(LC_ALL, "Russian"); 
+    float a[300][2];
+    int i = 0;
+    float Tk,Tsr,r;
+    cout<<"Введите Tk Tsr r:"<<endl;
+    cin>>Tk;
+    cin>>Tsr;
+    cin>>r;
+    for(float t = 0;t<=60;t+=0.2)
+    {
+        a[i][0] = t;
+        a[i][1] = cofe(Tk,Tsr,r,t);
+        i++;
+    }
+    cout<<"x     y"<<endl<<"-----------"<<endl;
+    for(i = 0;i<300;i++)
+    {
+        cout<<fixed<<setprecision(2)<<a[i][0]<<" "<<setprecision(6)<<a[i][1]<<endl;
+    }
+    return 0;
 }
